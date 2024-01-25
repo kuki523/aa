@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+        <title>Admin Panel - Art Gallery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Art Gallery</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="artists.html">Artists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container" style="margin-top: 80px;">
+        <h1 class="mt-4">Admin Panel</h1>
+        
+        <!-- Artist Form -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Manage Artists</h2>
+                <form id="artist-form">
+                    <input type="hidden" id="artist-id" value="">
+                    <div class="form-group">
+                        <label for="artist-name">Name</label>
+                        <input type="text" class="form-control" id="artist-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist-bio">Biography</label>
+                        <textarea class="form-control" id="artist-bio" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist-birthDate">Birth Date</label>
+                        <input type="date" class="form-control" id="artist-birthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist-deathDate">Death Date</label>
+                        <input type="date" class="form-control" id="artist-deathDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="artist-nationality">Nationality</label>
+                        <input type="text" class="form-control" id="artist-nationality" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist-pictureURL">Picture URL</label>
+                        <input type="url" class="form-control" id="artist-pictureURL" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Artist</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearArtistForm()">Clear</button>
+                </form>
+                <hr>
+                <div id="artists-list">
+                    <!-- List of artists with edit and delete options -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Artwork Form -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Manage Artworks</h2>
+                <form id="artwork-form">
+                    <input type="hidden" id="artwork-id" value="">
+                    <div class="form-group">
+                        <label for="artwork-artist">Artist</label>
+                        <select class="form-control" id="artwork-artist" required>
+                            <!-- Artists will be populated here -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="artwork-title">Title</label>
+                        <input type="text" class="form-control" id="artwork-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artwork-creationDate">Creation Date</label>
+                        <input type="date" class="form-control" id="artwork-creationDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artwork-medium">Medium</label>
+                        <input type="text" class="form-control" id="artwork-medium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artwork-dimensions">Dimensions</label>
+                        <input type="text" class="form-control" id="artwork-dimensions" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artwork-imageURL">Image URL</label>
+                        <input type="url" class="form-control" id="artwork-imageURL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artwork-description">Description</label>
+                        <textarea class="form-control" id="artwork-description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Artwork</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearArtworkForm()">Clear</button>
+                </form>
+                <hr>
+                <div id="artworks-list">
+                    <!-- List of artworks with edit and delete options -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <!-- Footer -->
+       <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Art Gallery 2024</p>
+        </div>
+    </footer>
+ <!-- Bootstrap core JavaScript -->
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+   
+   //Function to clear the form fields for artist
+function clearArtistForm() {
+    document.getElementById('artist-form').reset();
+    document.getElementById('artist-id').value = '';
+}
+
+//Function to clear the form fields for artwork
+function clearArtworkForm() {
+    document.getElementById('artwork-form').reset();
+    document.getElementById('artwork-id').value = '';
+}
+
+//Function to submit the artist form
+document.getElementById('artist-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    saveArtist();  
+});
+
+//Function to save (add/update) an artist
+function saveArtist() {
+    const artistId = document.getElementById('artist-id').value;
+    const url = artistId ? `/api/artists/${artistId}` : `/api/artists/`;
+    const method = artistId ? 'PUT' : 'POST';
+
+    const artistData = {
+        name: document.getElementById('artist-name').value,
+        bio: document.getElementById('artist-bio').value,
+        birthDate: document.getElementById('artist-birthDate').value,
+        deathDate: document.getElementById('artist-deathDate').value || null, 
+        nationality: document.getElementById('artist-nationality').value,
+        pictureURL: document.getElementById('artist-pictureURL').value,
+    };
+
+    fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(artistData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        clearArtistForm();
+        loadArtistsAndArtworks(); 
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+//Function to load artists and artworks
+function loadArtistsAndArtworks() {
+    //Load artists
+    fetch('/api/artists')
+        .then(response => response.json())
+        .then(artists => {
+            const artistsList = document.getElementById('artists-list');
+            artistsList.innerHTML = artists.map(artist => `
+                <div class="artist-entry">
+                    <span>${artist.name}</span>
+                    <button onclick="editArtist(${artist.id})">Edit</button>
+                    <button onclick="deleteArtist(${artist.id})">Delete</button>
+                </div>
+            `).join('');
+        });
+
+}
+
+//Function to edit an artist
+function editArtist(artistId) {
+    fetch(`/api/artists/${artistId}`)
+        .then(response => response.json())
+        .then(artist => {
+            //Populate the form with the artist data
+            document.getElementById('artist-name').value = artist.name;
+            document.getElementById('artist-bio').value = artist.bio;
+            document.getElementById('artist-birthDate').value = artist.birthDate;
+            document.getElementById('artist-deathDate').value = artist.deathDate || '';
+            document.getElementById('artist-nationality').value = artist.nationality;
+            document.getElementById('artist-pictureURL').value = artist.pictureURL;
+            document.getElementById('artist-id').value = artist.id;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+function deleteArtist(artistId) {
+    fetch(`/api/artists/${artistId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        loadArtistsAndArtworks(); //Reload the list
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+document.addEventListener('DOMContentLoaded', loadArtistsAndArtworks);
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadArtists();
+    loadArtworks();
+});
+
+function loadArtists() {
+    fetch('/api/artists')
+        .then(response => response.json())
+        .then(artists => {
+            const artistSelect = document.getElementById('artwork-artist');
+            artistSelect.innerHTML = artists.map(artist =>
+                `<option value="${artist.id}">${artist.name}</option>`
+            ).join('');
+        })
+        .catch(error => console.error('Error loading artists:', error));
+}
+
+function loadArtworks() {
+    fetch('/api/artworks')
+        .then(response => response.json())
+        .then(artworks => {
+            const artworksList = document.getElementById('artworks-list');
+            artworksList.innerHTML = ''; //Clear the list before adding new entries
+            artworks.forEach(artwork => {
+                const artworkEntryHtml = `
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="${artwork.imageURL}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="${artwork.title}">
+                            <div class="card-body">
+                                <p class="card-text">${artwork.title}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="editArtwork(${artwork.id})">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteArtwork(${artwork.id})">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                artworksList.innerHTML += artworkEntryHtml;
+            });
+        })
+        .catch(error => console.error('Error loading artworks:', error));
+}
+function clearArtworkForm() {
+    document.getElementById('artwork-form').reset();
+    document.getElementById('artwork-id').value = '';
+    document.getElementById('artwork-artist').selectedIndex = 0;
+}
+
+function editArtwork(artworkId) {
+    //Fetch the artwork details by ID
+    fetch(`/api/artworks/${artworkId}`)
+        .then(response => response.json())
+        .then(artwork => {
+            document.getElementById('artwork-id').value = artwork.id;
+            document.getElementById('artwork-title').value = artwork.title;
+            document.getElementById('artwork-creationDate').value = artwork.creationDate;
+            document.getElementById('artwork-medium').value = artwork.medium;
+            document.getElementById('artwork-dimensions').value = artwork.dimensions;
+            document.getElementById('artwork-artistId').value = artwork.artistId;
+            document.getElementById('artwork-imageURL').value = artwork.imageURL;
+            document.getElementById('artwork-description').value = artwork.description;
+
+            document.getElementById('artwork-form').scrollIntoView();
+        })
+        .catch(error => console.error('Error loading artwork details:', error));
+}
+
+function saveArtwork() {
+    const artworkId = document.getElementById('artwork-id').value;
+    const url = artworkId ? `/api/artworks/${artworkId}` : `/api/artworks/`;
+    const method = artworkId ? 'PUT' : 'POST';
+
+    const artworkData = {
+        title: document.getElementById('artwork-title').value,
+        creationDate: document.getElementById('artwork-creationDate').value,
+        medium: document.getElementById('artwork-medium').value,
+        dimensions: document.getElementById('artwork-dimensions').value,
+        artistId: document.getElementById('artwork-artist').value,
+        imageURL: document.getElementById('artwork-imageURL').value,
+        description: document.getElementById('artwork-description').value
+    };
+
+    fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(artworkData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        clearArtworkForm();
+        loadArtworks(); 
+    })
+    .catch(error => console.error('Error:', error));
+}
+function deleteArtwork(artworkId) {
+    if (confirm('Are you sure you want to delete this artwork?')) {
+        fetch(`/api/artworks/${artworkId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(() => {
+            loadArtworks(); 
+        })
+        .catch(error => console.error('Error deleting artwork:', error));
+    }
+}
+
+document.getElementById('artwork-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    saveArtwork();
+});
+
+  </script>
+  
+</body>
+</html>
